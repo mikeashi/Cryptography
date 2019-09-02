@@ -1,2 +1,3 @@
-# Cryptography
-the basic cryptography algorithms implemented in python
+# Cryptography Study
+
+a study of the basic cryptography algorithms and their security.

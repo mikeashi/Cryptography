@@ -1,5 +1,5 @@
 import argparse
-
+from analysers.detect_languages.detect_language import is_text
 
 # a simple caesar cipher encrypter/decrypter and brute force attack script
 
@@ -37,6 +37,8 @@ if __name__ == '__main__':
     parser.add_argument("-k", "--key", help="the key is a number 0 < k < length of the alphabet",
                         type=int, default=3)
     parser.add_argument("-a", "--alphabet", default=" ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    parser.add_argument("-l", "--language", help="the language to be used for brute force",
+                        default='en', choices=['en', 'ar'])
     args = parser.parse_args()
 
     if args.mode == 'e':
@@ -53,5 +55,7 @@ if __name__ == '__main__':
         c_text = input('Enter your cipher text :')
         for k in range(len(args.alphabet)):
             de_text = caesar_decrypt(c_text, args.alphabet, k)
-            #if is_text_english(de_text):
-               # print(de_text)
+            if is_text(args.language, de_text):
+                print('using key %s' % k)
+                print(de_text)
+                break

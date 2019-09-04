@@ -52,4 +52,6 @@ if __name__ == '__main__':
     elif args.mode == 'b':
         c_text = input('Enter your cipher text :')
         for k in range(len(args.alphabet)):
-            print('Using key %s: \n\t\t %s\n' % (k, caesar_decrypt(c_text, args.alphabet, k)))
+            de_text = caesar_decrypt(c_text, args.alphabet, k)
+            #if is_text_english(de_text):
+               # print(de_text)

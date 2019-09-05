@@ -1,5 +1,6 @@
 import argparse
-from analysers.detect_languages.detect_language import is_text
+from langdetect import detect_langs, DetectorFactory
+DetectorFactory.seed = 0
 
 # a simple caesar cipher encrypter/decrypter and brute force attack script
 
@@ -38,7 +39,11 @@ if __name__ == '__main__':
                         type=int, default=3)
     parser.add_argument("-a", "--alphabet", default=" ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     parser.add_argument("-l", "--language", help="the language to be used for brute force",
-                        default='en', choices=['en', 'ar'])
+                        default='en',
+                        choices=['af', 'ar', 'bg', 'bn', 'ca', 'cs', 'cy', 'da', 'de', 'el', 'en', 'es', 'et', 'fa',
+                                 'fi', 'fr', 'gu', 'he', 'hi', 'hr', 'hu', 'id', 'it', 'ja', 'kn', 'ko', 'lt', 'lv',
+                                 'mk', 'ml', 'mr', 'ne', 'nl', 'no', 'pa', 'pl', 'pt', 'ro', 'ru', 'sk', 'sl', 'so',
+                                 'sq', 'sv', 'sw', 'ta', 'te', 'th', 'tl', 'tr', 'uk', 'ur', 'vi', 'zh-cn', 'zh-tw'])
     args = parser.parse_args()
 
     if args.mode == 'e':
@@ -55,7 +60,7 @@ if __name__ == '__main__':
         c_text = input('Enter your cipher text :')
         for k in range(len(args.alphabet)):
             de_text = caesar_decrypt(c_text, args.alphabet, k)
-            if is_text(args.language, de_text):
+            lang = detect_langs(de_text)[0]
+            if lang.lang == args.language and lang.prob >= 0.8:
                 print('using key %s' % k)
                 print(de_text)
-                break
